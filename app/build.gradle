@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
     implementation("com.squareup.okio:okio:2.6.0")
     implementation("com.squareup.okhttp3:okhttp:4.6.0")
     implementation 'com.google.code.gson:gson:2.8.6'
@@ -41,6 +42,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation fileTree(dir: 'D:\\AndroidProject\\Himalaya\\app\\libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation 'androidx.contentpager:contentpager:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
