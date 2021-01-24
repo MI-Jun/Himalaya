@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class RecommendPresenter implements IRecommendPresenter {
 
-    private static final String TAG = "";
+    private static final String TAG = "RecommendPresenter";
     private RecommendPresenter(){}
 
     private List<IRecommendViewCallback> mCallbacks = new ArrayList<>();
@@ -52,7 +52,7 @@ public class RecommendPresenter implements IRecommendPresenter {
         CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
             @Override
             public void onSuccess(GussLikeAlbumList gussLikeAlbumList) {
-                LogUtil.d(TAG,"thread name -- >" + Thread.currentThread()..getName());
+                LogUtil.d(TAG,"thread name -- >" + Thread.currentThread().getName());
                 //数据获取成功
                 if (gussLikeAlbumList != null){
                     List<Album> albumList = gussLikeAlbumList.getAlbumList();
@@ -69,18 +69,38 @@ public class RecommendPresenter implements IRecommendPresenter {
                 LogUtil.d(TAG,"error -- >" + i);
                 LogUtil.d(TAG,"errorMsg -- >" + s);
 
+                handlerError();
             }
         });
 
     }
 
+    private void handlerError() {
+        if (mCallbacks != null) {
+            for (IRecommendViewCallback callback : mCallbacks) {
+                callback.onNetWorkError();
+            }
+        }
+    }
+
 
     private void handlerRecommendResult(List<Album> albumList) {
         //通知UI更新
-        if (mCallbacks != null) {
-            for (IRecommendViewCallback callback : mCallbacks) {
-                callback.onRecommendListLoaded(albumList);
+        if (albumList != null) {
+            if (albumList.size() == 0) {
+                for (IRecommendViewCallback callback : mCallbacks) {
+                    callback.onEmpty();
+                }
+            }else{
+                for (IRecommendViewCallback callback : mCallbacks) {
+                    callback.onRecommendListLoaded(albumList);
+                }
             }
+        }
+    }
+    private void updataLoading(){
+        for (IRecommendViewCallback callback : mCallbacks) {
+            callback.onLoading();
         }
     }
 
@@ -96,7 +116,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
     @Override
     public void registerViewCallback(IRecommendViewCallback callback) {
-        if (mCallbacks != null && mCallbacks.contains(callback)) {
+        if (mCallbacks != null && !mCallbacks.contains(callback)) {
             mCallbacks.add(callback);
         }
     }
