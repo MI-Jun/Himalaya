@@ -4,20 +4,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 
-import com.example.himalaya.MainActivity;
 import com.example.himalaya.R;
 
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 public class IndicatorAdapter extends CommonNavigatorAdapter {
 
     private final String[] mTitles;
+    private OnIndicatorTapClickListener mListener=null;
+    private OnIndicatorTapClickListener mOnTabClickListener;
 
     public IndicatorAdapter(Context context) {
         mTitles = context.getResources().getStringArray(R.array.indicator_titile);
@@ -51,7 +50,9 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
             @Override
             public void onClick(View view) {
                 //切换viewPager的内容，如果index不一样的话。
-                //TODO:
+                if (mOnTabClickListener != null) {
+                    mOnTabClickListener.onTabClick(index);
+                }
             }
         });
         //把这个创建好的view返回回去
@@ -64,6 +65,14 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
         indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
         indicator.setColors(Color.parseColor("#ffffff"));
         return indicator;
+    }
+
+    //为了与ViewPage进行连动，需要设置一个接口，通知使用者实现被点击事件的处理
+    public  void setOnIndicatorTapClickListener(OnIndicatorTapClickListener listener){
+        this.mOnTabClickListener = listener;
+    }
+    public interface OnIndicatorTapClickListener{
+        void onTabClick(int index);
     }
 
 }

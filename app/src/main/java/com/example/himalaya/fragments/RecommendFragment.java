@@ -12,24 +12,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.himalaya.DetailActivity;
 import com.example.himalaya.R;
-import com.example.himalaya.adapters.RecommendListAdapter;
+import com.example.himalaya.adapters.AlbumListAdapter;
 import com.example.himalaya.base.BaseFragment;
 import com.example.himalaya.interfaces.IRecommendViewCallback;
 import com.example.himalaya.presenters.AlbumDetailPresenter;
 import com.example.himalaya.presenters.RecommendPresenter;
 import com.example.himalaya.utils.LogUtil;
 import com.example.himalaya.views.UILoader;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
-
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
+
+
 
 import java.util.List;
 
-public class RecommendFragment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener, RecommendListAdapter.OnRecommendItemClickListen {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener, AlbumListAdapter.OnRecommendItemClickListen {
     private static final String TAG = "";
     private View mRootView;
     private RecyclerView mRecommendRv;
-    private RecommendListAdapter mRecommendListAdapter;
+    private AlbumListAdapter mRecommendListAdapter;
     private RecommendPresenter mRecommendPresenter;
     private UILoader mUiLoader;
 
@@ -71,6 +73,8 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         //RecycleView的使用
         //1.找到控件
         mRecommendRv = mRootView.findViewById(R.id.recommend_list);
+        TwinklingRefreshLayout twinklingRefreshLayout = mRootView.findViewById(R.id.over_scroll_view);
+        twinklingRefreshLayout.setPureScrollModeOn();
         //2.设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -86,9 +90,9 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
             }
         });
         //3.设置适配器
-        mRecommendListAdapter = new RecommendListAdapter();
+        mRecommendListAdapter = new AlbumListAdapter();
         mRecommendRv.setAdapter(mRecommendListAdapter);
-        mRecommendListAdapter.setOnRecommendItemClickListen(this);
+        mRecommendListAdapter.setAlbumItemClickListener(this);
         return mRootView;
     }
 
@@ -102,26 +106,26 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         //数据回来以后，就是更新UI了
         //把数据设置给适配器，并且更新UI
         mRecommendListAdapter.setData(result);
-        mUiLoader.updataStatus(UILoader.UIStatus.SUCCESS);
+        mUiLoader.updateStatus(UILoader.UIStatus.SUCCESS);
 
     }
 
     @Override
     public void onNetWorkError() {
         LogUtil.d(TAG,"onNetWorkError");
-        mUiLoader.updataStatus(UILoader.UIStatus.NETWORK_ERROR);
+        mUiLoader.updateStatus(UILoader.UIStatus.NETWORK_ERROR);
     }
 
     @Override
     public void onEmpty() {
         LogUtil.d(TAG,"onEmpty");
-        mUiLoader.updataStatus(UILoader.UIStatus.EMPTY);
+        mUiLoader.updateStatus(UILoader.UIStatus.EMPTY);
     }
 
     @Override
     public void onLoading() {
         LogUtil.d(TAG,"onLoading");
-        mUiLoader.updataStatus(UILoader.UIStatus.LOADING);
+        mUiLoader.updateStatus(UILoader.UIStatus.LOADING);
     }
 
 
@@ -130,7 +134,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         super.onDestroyView();
         //取消接口的注册，避免内存泄漏
         if (mRecommendPresenter != null) {
-            mRecommendPresenter.unregisterViewCallback(this);
+            mRecommendPresenter.unRegisterViewCallback(this);
         }
     }
 

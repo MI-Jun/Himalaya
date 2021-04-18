@@ -41,7 +41,7 @@ public abstract class UILoader extends FrameLayout {
         init();
     }
 
-    public void updataStatus(UIStatus status){
+    public void updateStatus(UIStatus status){
         mCurrentStatus = status;
         //更新UI一定要在主线程上
         BaseApplication.getHandler().post(new Runnable() {

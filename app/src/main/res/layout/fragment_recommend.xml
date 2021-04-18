@@ -4,12 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:id="@+id/over_scroll_view"
+        android:layout_height="match_parent">
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recommend_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#CCCCCC"
         android:overScrollMode="never"/>
+
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
 </RelativeLayout>

@@ -1,23 +1,21 @@
 package com.example.himalaya.presenters;
 
+import com.example.himalaya.data.XimalayaApi;
 import com.example.himalaya.interfaces.IRecommendPresenter;
 import com.example.himalaya.interfaces.IRecommendViewCallback;
-import com.example.himalaya.utils.Constants;
 import com.example.himalaya.utils.LogUtil;
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RecommendPresenter implements IRecommendPresenter {
 
     private static final String TAG = "RecommendPresenter";
+    private List<Album> mCurrentRecommend = null;
+
     private RecommendPresenter(){}
 
     private List<IRecommendViewCallback> mCallbacks = new ArrayList<>();
@@ -39,6 +37,14 @@ public class RecommendPresenter implements IRecommendPresenter {
     }
 
     /**
+     * 获取当前的推荐专辑列表
+     * @return 推荐专辑列表，使用之前要判空
+     */
+    public List<Album> getCurrentRecommend(){
+        return mCurrentRecommend;
+    }
+
+    /**
      * 获取推荐内容，其实就是猜你喜欢
      * 接口：喜马拉雅SDK，3.10.6 获取猜你喜欢专辑
      * */
@@ -46,10 +52,9 @@ public class RecommendPresenter implements IRecommendPresenter {
     public void getRecommendList() {
         //获取推荐内容
         //封装参数
-        Map<String, String> map = new HashMap<>();
-        //这个参数表示一页数据返回多少页（Constants.RECOMMEND_COUNT + ""）
-        map.put(DTransferConstants.LIKE_COUNT, Constants.COUNT_rECOMMEND + "");
-        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
+      updataLoading();
+        XimalayaApi ximalayaApi = XimalayaApi.getXimalayaApi();
+        ximalayaApi.getRecommendList(new IDataCallBack<GussLikeAlbumList>() {
             @Override
             public void onSuccess(GussLikeAlbumList gussLikeAlbumList) {
                 LogUtil.d(TAG,"thread name -- >" + Thread.currentThread().getName());
@@ -72,6 +77,8 @@ public class RecommendPresenter implements IRecommendPresenter {
                 handlerError();
             }
         });
+
+
 
     }
 
@@ -98,6 +105,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
                     callback.onRecommendListLoaded(albumList);
                 }
+                this.mCurrentRecommend = albumList;
             }
         }
     }
@@ -125,9 +133,9 @@ public class RecommendPresenter implements IRecommendPresenter {
     }
 
     @Override
-    public void unregisterViewCallback(IRecommendViewCallback callback) {
+    public void unRegisterViewCallback(IRecommendViewCallback callback) {
         if (mCallbacks != null) {
-            mCallbacks.remove(mCallbacks);
+            mCallbacks.remove(callback);
         }
     }
 }
