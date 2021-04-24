@@ -15,6 +15,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
     private static final String TAG = "RecommendPresenter";
     private List<Album> mCurrentRecommend = null;
+    private List<Album> mRecommendList;
 
     private RecommendPresenter(){}
 
@@ -50,6 +51,12 @@ public class RecommendPresenter implements IRecommendPresenter {
      * */
     @Override
     public void getRecommendList() {
+        //如果内容不空的话，那么直接使用当前的内容
+        if(mRecommendList != null && mRecommendList.size() > 0) {
+            LogUtil.d(TAG,"getRecommendList -- > from list.");
+            handlerRecommendResult(mRecommendList);
+            return;
+        }
         //获取推荐内容
         //封装参数
       updataLoading();
@@ -60,10 +67,10 @@ public class RecommendPresenter implements IRecommendPresenter {
                 LogUtil.d(TAG,"thread name -- >" + Thread.currentThread().getName());
                 //数据获取成功
                 if (gussLikeAlbumList != null){
-                    List<Album> albumList = gussLikeAlbumList.getAlbumList();
+                    mRecommendList = gussLikeAlbumList.getAlbumList();
                     //数据回来后，我们去更新UI
                     //upRecommendUI(albumList);
-                    handlerRecommendResult(albumList);
+                    handlerRecommendResult(mRecommendList);
                 }
 
             }

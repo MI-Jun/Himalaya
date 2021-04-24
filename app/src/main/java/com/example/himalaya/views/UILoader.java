@@ -94,11 +94,11 @@ public abstract class UILoader extends FrameLayout {
 
     }
 
-    private View getEmptyView() {
+    protected View getEmptyView() {
         return LayoutInflater.from(getContext()).inflate(R.layout.fragment_empty_view,this,false);
     }
 
-    private View getNetworkErrorView() {
+    protected View getNetworkErrorView() {
         View networkErrorView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_error_view,this,false);
         networkErrorView.findViewById(R.id.network_error_icon).setOnClickListener(new OnClickListener() {
             @Override
@@ -114,7 +114,7 @@ public abstract class UILoader extends FrameLayout {
 
     protected abstract View getSuccessView(ViewGroup container);
 
-    private View getLoadingView() {
+    protected View getLoadingView() {
         return LayoutInflater.from(getContext()).inflate(R.layout.fragment_loading_view,this,false);
     }
 

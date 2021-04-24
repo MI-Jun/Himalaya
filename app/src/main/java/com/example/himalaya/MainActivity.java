@@ -64,7 +64,7 @@ public class MainActivity extends FragmentActivity implements IPlayerCallback {
             @Override
             public void onTabClick(int index) {
                 if (mContentPager != null){
-                    mContentPager.setCurrentItem(index);
+                    mContentPager.setCurrentItem(index,false);
                 }
             }
         });
