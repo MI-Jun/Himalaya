@@ -100,7 +100,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
 
             albumTitleTv.setText(album.getAlbumTitle());
             albumDesTv.setText(album.getAlbumIntro());
-            albumPlayCountTv.setText(album.getPlayCount() + "");
+            albumPlayCountTv.setText(album.getPlayCount() / 10000 + "万");
             albumContentCountTv.setText(album.getIncludeTrackCount() + "");
 
             String coverUrlLarge = album.getCoverUrlLarge();

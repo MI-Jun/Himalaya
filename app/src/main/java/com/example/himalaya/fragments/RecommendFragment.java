@@ -100,8 +100,6 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
     @Override
     public void onRecommendListLoaded(List<Album> result) {
         LogUtil.d(TAG,"onRecommendListLoaded");
-
-
         //当我们获取到推荐内容的时候，这个方法就会被调用（成功了）
         //数据回来以后，就是更新UI了
         //把数据设置给适配器，并且更新UI

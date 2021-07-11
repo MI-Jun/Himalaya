@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_album_item_bg">
+
+    <TextView
+        android:id="@+id/order_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:textColor="#979797"
+        android:layout_centerVertical="true"
+        android:text="0"
+        android:textSize="22sp"/>
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/order_text"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/detail_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我是大标题"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/detail_item_play_count"
+                android:drawableLeft="@mipmap/play_info_icon"
+                android:drawablePadding="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14.4万"
+                android:textSize="12sp"
+                android:textColor="#979797"/>
+
+            <TextView
+                android:id="@+id/detail_item_duration"
+                android:drawableLeft="@mipmap/ic_sound"
+                android:drawablePadding="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="05:23"
+                android:textSize="12sp"
+                android:textColor="#979797"/>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/detail_item_update_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2021-2-26"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:textColor="#979797"
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"/>
+
+</RelativeLayout>

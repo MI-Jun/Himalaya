@@ -1,5 +1,7 @@
 package com.example.himalaya.adapters;
 
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -22,5 +24,10 @@ public class MainContentAdapter extends FragmentPagerAdapter {
     public int getCount() {
 
         return FragmentCreator.PAGE_COUNT;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+
     }
 }

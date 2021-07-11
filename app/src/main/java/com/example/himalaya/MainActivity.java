@@ -65,10 +65,12 @@ public class MainActivity extends FragmentActivity implements IPlayerCallback {
             public void onTabClick(int index) {
                 if (mContentPager != null){
                     mContentPager.setCurrentItem(index,false);
+
                 }
             }
         });
 
+        //TODO：播放列表
         mPlayControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,12 +96,15 @@ public class MainActivity extends FragmentActivity implements IPlayerCallback {
         mPlayControlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean hasPlayList = mPlayerPresenter.hasPlayList();
-                if (!hasPlayList) {
-                    playFirstRecommend();
+                if (mPlayerPresenter != null) {
+                    boolean hasPlayList = mPlayerPresenter.hasPlayList();
+                    if (!hasPlayList) {
+                        playFirstRecommend();
+                    }
+                    //跳转到播放器界面
+                    startActivity(new Intent(MainActivity.this,PlayerActivity.class));
                 }
-                //跳转到播放器界面
-                startActivity(new Intent(MainActivity.this,PlayerActivity.class));
+
             }
         });
 
@@ -143,6 +148,7 @@ public class MainActivity extends FragmentActivity implements IPlayerCallback {
         MainContentAdapter mainContentAdapter = new MainContentAdapter(supportFragmentManager);
 
         mContentPager.setAdapter(mainContentAdapter);
+        mContentPager.setOffscreenPageLimit(3);
 
         //把ViewPager和indicator绑定在一起
         mMagicIndicator.setNavigator(commonNavigator);
@@ -255,4 +261,18 @@ public class MainActivity extends FragmentActivity implements IPlayerCallback {
     public void updateListOrder(boolean isReverse) {
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+//        //方式一：将此任务转向后台
+//        moveTaskToBack(false);
+
+        //方式二：返回手机的主屏幕
+    Intent intent = new Intent(Intent.ACTION_MAIN);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.addCategory(Intent.CATEGORY_HOME);
+    startActivity(intent);
+    }
+
 }

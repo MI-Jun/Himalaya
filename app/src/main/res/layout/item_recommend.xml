@@ -52,8 +52,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
                     android:src="@mipmap/play_info_icon"/>
 
                 <TextView
@@ -63,7 +63,7 @@
                     android:text="234.5万"
                     android:textColor="#ff848484"
                     android:layout_marginLeft="2dp"
-                    android:textSize="7sp"/>
+                    android:textSize="9sp"/>
             </LinearLayout>
 
 
@@ -76,8 +76,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
                     android:src="@mipmap/ic_sound"/>
 
                 <TextView
@@ -87,7 +87,7 @@
                     android:layout_marginLeft="2dp"
                     android:text="23集"
                     android:textColor="#ff848484"
-                    android:textSize="7sp"/>
+                    android:textSize="9sp"/>
             </LinearLayout>
 
 
